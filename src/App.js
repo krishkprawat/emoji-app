@@ -108,7 +108,7 @@ export default function App() {
   return (
     /** concept 3 is onchange */
     <div className="App">
-      <h1>Inside Outtttt</h1>
+      <h1>Inside Outtttt (The Emojipedia) </h1>
       <input
         onChange={changeHandler}
         value={emoji}
