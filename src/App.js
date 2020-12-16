@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import { useState } from "react";
 
-const emojiDictionary = {
+var emojiDictionary = {
   "😊": "Smiling",
   "😳": "disbelief",
   "😔": "sad",
@@ -84,51 +84,53 @@ const emojiDictionary = {
   "🧑": "Person"
 };
 
-const emojis = Object.keys(emojiDictionary);
+var emojisWeKnow = Object.keys(emojiDictionary);
 
 export default function App() {
-  const [emoji, setEmoji] = useState("");
+  // const [emoji, setEmoji] = useState("");
   const [meaning, setMeaning] = useState("meaning of emoji appear here..");
 
-  function changeHandler(event) {
-    const inputEmoji = event.target.value;
-    setEmoji(inputEmoji);
+  function emojiInputHandler(event) {
+    // processing
+    var userInput = event.target.value;
+    var meaning = emojiDictionary[userInput];
 
-    if (inputEmoji in emojiDictionary) {
-      setMeaning(emojiDictionary[inputEmoji]);
-    } else {
-      setMeaning("oops.. this emoji is not recognized.");
+    if (meaning === undefined){
+      meaning="oops.. this emoji is not recognized.";
     }
+  // react call to show output
+   setMeaning(meaning);
+
   }
 
-  function emojiClickHandler(inputEmoji) {
-    setMeaning(emojiDictionary[inputEmoji]);
+  function emojiClickHandler(emoji) {
+    // processing
+    var meaning = emojiDictionary[emoji];
+    setMeaning(meaning);  //react call to output.
   }
-
+  
   return (
-    /** concept 3 is onchange */
+    
     <div className="App">
-      <h1>Inside Outtttt (The Emojipedia) </h1>
-      <input
-        onChange={changeHandler}
-        value={emoji}
-        placeholder={"Search your emoji here:"}
-        style={{
-          padding: "1em",
-          minWidth: "80%"
-        }}
-      />
-      <h2> {emoji} </h2>
-      <h3> {meaning} </h3>
-      {emojis.map((emoji) => (
-        <span
-          onClick={() => emojiClickHandler(emoji)}
-          style={{ fontSize: "2rem", padding: "0.5rem", cursor: "pointer" }}
-        >
-          {" "}
-          {emoji}{" "}
+      <h1> The Emojipedia "inside out" </h1>
+
+      <input onChange={emojiInputHandler} />
+      <h2> {meaning} </h2> 
+
+      <h3>emojis we know</h3>
+      {emojisWeKnow.map(function (emoji){
+       return(
+        <span 
+          onClick={ ()=> emojiClickHandler(emoji)}
+          style= {{ fontsize :"2rem", padding:"0.5rem", cursor:"pointer" }} 
+          key={emoji}
+        > 
+         {emoji} 
         </span>
-      ))}
-    </div>
+      );
+
+     })}
+   </div>
   );
+  
 }
